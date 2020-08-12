@@ -1,0 +1,42 @@
+<dictionary xmlns="http://www.veloxfintech.com"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.veloxfintech.com ../../../../build/velox.xsd">
+  <attr name="schema_name" value="Starter"/>
+  <attr name="package_root" value="com.velox.starter.api"/>
+
+  <fieldTypes>
+    <field name="email" type="string"/>
+    <field name="firstName" type="string"/>
+    <field name="lastName" type="string"/>
+    <field name="region" type="string"/>
+  </fieldTypes>
+
+  <tables>
+    <table name="User">
+      <field name="email" primaryKey="true"/>
+      <field name="firstName"/>
+      <field name="lastName"/>
+      <field name="region"/>
+    </table>
+  </tables>
+
+  <views>
+    <view name="User" table="User">
+      <column name="firstName" source="firstName" caption="First Name"/>
+      <column name="lastName" source="lastName" caption="Last Name"/>
+      <column name="region" source="region" caption="Region"/>
+      <column name="email" source="email" caption="Email"/>
+    </view>
+  </views>
+
+  <screens>
+    <screen name="Starter">
+      <control name="firstName" type="singlevalue" datatype="string"/>
+      <control name="lastName" type="singlevalue" datatype="string"/>
+      <control name="region" type="singlevalue" datatype="string"/>
+      <control name="email" type="singlevalue" datatype="string"/>
+      <control name="addUser" type="action"/>
+      <control name="users" type="datagrid" datatype="User" keytype="?" viewname="User"/>
+    </screen>
+  </screens>
+</dictionary>

@@ -1,0 +1,68 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url velox_repo
+            credentials {
+                username velox_repo_user
+                password velox_repo_password
+            }
+        }
+    }
+
+    dependencies {
+        classpath 'com.velox:velox-gradle-plugin:(,0.5.0]'
+    }
+
+    configurations.classpath.resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
+}
+
+plugins {
+    id 'java'
+    id 'application'
+    id 'idea'
+}
+
+apply plugin: 'com.velox.velox-gradle-plugin'
+
+repositories {
+    jcenter()
+    maven {
+        url velox_repo
+        credentials {
+            username velox_repo_user
+            password velox_repo_password
+        }
+    }
+}
+
+dependencies {
+    implementation 'com.velox:velox-framework:(,1.0.0]'
+    runtimeOnly 'ch.qos.logback:logback-classic:1.2.3'
+}
+
+configurations {
+    all {
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+        resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
+    }
+}
+
+application {
+    mainClassName = 'com.velox.starter.Application'
+}
+
+distributions {
+    main {
+        contents {
+            from 'src/main/webapp', {
+                into 'src/main/webapp'
+            }
+        }
+    }
+}
+
+idea.module {
+    excludeDirs += file('.vertx')
+    excludeDirs += file('.local')
+}
