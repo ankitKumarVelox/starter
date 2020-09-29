@@ -1,6 +1,4 @@
-<dictionary xmlns="http://www.veloxfintech.com"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.veloxfintech.com ../../../../build/velox.xsd">
+<dictionary xmlns="http://www.veloxfintech.com">
   <attr name="schema_name" value="Starter"/>
   <attr name="package_root" value="com.velox.starter.api"/>
 

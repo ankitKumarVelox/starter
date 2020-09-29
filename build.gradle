@@ -11,7 +11,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.velox:velox-gradle-plugin:(,0.5.0]'
+        classpath 'com.velox:velox-gradle-plugin:(,0.6.0]'
     }
 
     configurations.classpath.resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
@@ -65,4 +65,5 @@ distributions {
 idea.module {
     excludeDirs += file('.vertx')
     excludeDirs += file('.local')
+    downloadJavadoc = true
 }
