@@ -9,10 +9,34 @@
     <link rel="stylesheet" href="app.css">
 </head>
 
+<h1 style="position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;">
+    Loading...
+</h1>
+
 <body>
 <script src="velox/dist/velox.bootstrap.js"></script>
 <script>
-    window.onload = () => new DefaultLaunchPadFactory(environment).start();
+    window.onload = () => {
+        const factory = new DefaultLaunchPadFactory(environment);
+
+        const authType = "{{authType}}";
+        if (authType && authType !== ["{", "{", "authType", "}", "}"].join("") && authType !== "basic") {
+            factory.login = () => {
+                const command = createLoginRequest({
+                    authType: "{{authType}}",
+                    userName: "{{userName}}",
+                    password: "{{code}}"
+                });
+                environment.sendCommand(command);
+            }
+        }
+
+        factory.start();
+    };
 </script>
 </body>
 
