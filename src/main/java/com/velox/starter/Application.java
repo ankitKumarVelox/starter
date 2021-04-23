@@ -2,10 +2,10 @@ package com.velox.starter;
 
 import com.aralis.app.api.InstanceInfo;
 import com.aralis.app.api.InstanceInfoBuilder;
-import com.aralis.application.ApplicationContext;
-import com.aralis.application.ApplicationContextBuilder;
-import com.aralis.application.VeloxCoreComponents;
-import com.aralis.tools.VeloxToolModule;
+import com.caelo.application.ApplicationContext;
+import com.caelo.application.ApplicationContextBuilder;
+import com.caelo.application.VeloxCoreComponents;
+import com.velox.tools.VeloxToolModule;
 import com.aralis.tools.configuration.ui.UserSettingScreenProvider;
 import com.aralis.vm.ScreenProviderFactory;
 import com.aralis.vm.SimpleScreenProviderFactory;
