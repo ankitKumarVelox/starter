@@ -43,7 +43,7 @@ configurations {
 }
 
 application {
-    mainClass = 'com.velox.starter.Application'
+    mainClass.set('com.velox.starter.Application')
 }
 
 distributions {
