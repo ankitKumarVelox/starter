@@ -2,15 +2,17 @@ package com.velox.starter;
 
 import com.aralis.app.api.InstanceInfo;
 import com.aralis.app.api.InstanceInfoBuilder;
+import com.aralis.tools.configuration.ui.UserSettingScreenProvider;
+import com.aralis.tools.support.SupportViewerScreenProvider;
+import com.aralis.vm.ScreenProviderFactory;
+import com.aralis.vm.SimpleScreenProviderFactory;
 import com.caelo.application.ApplicationContext;
 import com.caelo.application.ApplicationContextBuilder;
 import com.caelo.application.VeloxCoreComponents;
-import com.velox.tools.VeloxToolModule;
-import com.aralis.tools.configuration.ui.UserSettingScreenProvider;
-import com.aralis.vm.ScreenProviderFactory;
-import com.aralis.vm.SimpleScreenProviderFactory;
 import com.caelo.util.logging.Loggers;
 import com.velox.starter.api.StarterSchemaDescriptor;
+import com.velox.tools.VeloxToolComponents;
+import com.velox.tools.VeloxToolModule;
 import com.velox.web.VeloxWebComponents;
 import com.velox.web.VeloxWebModule;
 import com.velox.web.vertx.ContextRoot;
@@ -44,8 +46,11 @@ public class Application {
     }
 
     private static ScreenProviderFactory createScreenProviderFactory(ApplicationContext ctx) {
-        return new SimpleScreenProviderFactory(
-          new StarterScreenProvider("Starter", "Velox", "fa-desktop"),
+        return new SimpleScreenProviderFactory(new StarterScreenProvider("Starter", "Velox", "fa-desktop"),
+          new SupportViewerScreenProvider(ctx.get(VeloxToolComponents.CachePublisherTracker),
+            "Support Viewer",
+            "Configuration/Support",
+            "fa-phone"),
           new UserSettingScreenProvider("User Settings", "Configuration", "fa-user-circle"));
     }
 }
