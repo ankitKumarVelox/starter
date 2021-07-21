@@ -3,18 +3,19 @@ package com.velox.starter;
 import com.aralis.vm.BaseScreenProvider;
 import com.aralis.vm.ClientNotifier;
 import com.aralis.vm.SessionState;
+import com.caelo.vm.workspace.WorkspaceScreenProvider;
 import com.velox.starter.api.StarterScreen;
 import com.velox.starter.api.User;
 import com.velox.starter.api.UserBuilder;
 import java.util.Arrays;
 
-public class StarterScreenProvider extends BaseScreenProvider<StarterScreen> {
+public class StarterScreenProvider extends WorkspaceScreenProvider<StarterScreen> {
     public StarterScreenProvider(final String caption, final String group, final String icon) {
         super(StarterScreen.class, caption, group, icon);
     }
 
     @Override
-    public void create(final SessionState state, final ClientNotifier notifier) {
+    public StarterScreen createScreen(final SessionState state, final ClientNotifier notifier) {
         final StarterScreen screen = new StarterScreen(state, state.getDataContextAccessor().getTable(User.class));
         screen.title("Starter");
 
@@ -30,6 +31,6 @@ public class StarterScreenProvider extends BaseScreenProvider<StarterScreen> {
             state.getDataContextAccessor().getPublisher(User.class).publish(user);
         });
 
-        notifier.created(screen);
+        return screen;
     }
 }
