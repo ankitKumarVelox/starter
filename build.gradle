@@ -16,8 +16,6 @@ buildscript {
     dependencies {
         classpath 'com.velox:velox-gradle-plugin:(,0.7.0]'
     }
-
-    configurations.classpath.resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
 }
 
 plugins {
@@ -32,14 +30,7 @@ repositories repos
 
 dependencies {
     implementation 'com.velox:velox-framework:(,1.6.0]'
-    runtimeOnly 'ch.qos.logback:logback-classic:1.2.3'
-}
-
-configurations {
-    all {
-        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-        resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
-    }
+    runtimeOnly 'ch.qos.logback:logback-classic:1.2.5'
 }
 
 application {
