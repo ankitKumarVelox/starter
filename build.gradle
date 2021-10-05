@@ -29,12 +29,13 @@ apply plugin: 'com.velox.velox-gradle-plugin'
 repositories repos
 
 dependencies {
-    implementation 'com.velox:velox-framework:(,1.7.0]'
-    runtimeOnly 'ch.qos.logback:logback-classic:1.2.5'
+    implementation 'com.velox:velox-framework:1.8.0+'
+    runtimeOnly 'ch.qos.logback:logback-classic:1.2.6'
 }
 
 application {
     mainClass.set('com.velox.starter.Application')
+    applicationDefaultJvmArgs = ['-Dfile.encoding=UTF-8']
 }
 
 distributions {
