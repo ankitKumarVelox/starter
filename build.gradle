@@ -38,6 +38,10 @@ application {
     applicationDefaultJvmArgs = ['-Dfile.encoding=UTF-8']
 }
 
+startScripts {
+    classpath = files( '$APP_HOME/lib/*' )
+}
+
 distributions {
     main {
         contents {
