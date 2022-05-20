@@ -2,6 +2,9 @@
 This is a starter application building an application on the Velox platform.
 ## How to Build and Run
 At the minimum you need to have Java 11 installed locally for building and running the app. Although Gradle is used for building this repository, gradle wrapper is provided hence pre-installed Gradle is not necessary. However, if you prefer pre-installed Gradle, please install Gradle version 7.2 or above. 
+## Source artifactory credentials
+1. You need to get the appropriate credentials and your organization specific artifactory url
+1. Place the credentials in  the provided gradle.properties file
 ### Build The Default Way
 If you have unrestricted network:
 1. clone or download the source files from the master branch
