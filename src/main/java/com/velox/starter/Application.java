@@ -10,7 +10,6 @@ import com.caelo.application.ApplicationContext;
 import com.caelo.application.ApplicationContextBuilder;
 import com.caelo.application.VeloxCoreComponents;
 import com.caelo.util.logging.Loggers;
-import com.velox.starter.api.StarterSchemaDescriptor;
 import com.velox.tools.VeloxToolComponents;
 import com.velox.tools.VeloxToolModule;
 import com.velox.web.VeloxWebComponents;
@@ -40,13 +39,12 @@ public class Application {
           .register(VeloxCoreComponents.ScreenProviderFactory, Application::createScreenProviderFactory)
           .get();
 
-        context.get(VeloxCoreComponents.DataContextAccessor).addDescriptors(StarterSchemaDescriptor.Descriptors);
-
         return context;
     }
 
     private static ScreenProviderFactory createScreenProviderFactory(ApplicationContext ctx) {
-        return new SimpleScreenProviderFactory(new StarterScreenProvider("Starter", "Velox", "fa-desktop"),
+        return new SimpleScreenProviderFactory(
+          new StarterScreenProvider("Starter", "Velox", "fa-desktop"),
           new SupportViewerScreenProvider(ctx.get(VeloxToolComponents.CachePublisherTracker),
             "Support Viewer",
             "Configuration/Support",
