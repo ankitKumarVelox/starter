@@ -14,7 +14,7 @@ buildscript {
     repositories repos
 
     dependencies {
-        classpath 'com.velox:velox-gradle-plugin:(,0.7.0]'
+        classpath 'com.velox:velox-gradle-plugin:(,0.8.0]'
     }
 }
 
