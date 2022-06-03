@@ -18,7 +18,10 @@
 </h1>
 
 <body>
-<script src="velox/dist/velox.bootstrap.js"></script>
+<script>
+  window.veloxNonce = "{{nonce}}";
+</script>
+<script src="velox/dist/velox.bootstrap.js?nonce={{nonce}}"></script>
 <script>
     window.onload = () => {
         const factory = new DefaultLaunchPadFactory(environment);

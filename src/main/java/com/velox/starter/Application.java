@@ -1,7 +1,5 @@
 package com.velox.starter;
 
-import com.aralis.app.api.InstanceInfo;
-import com.aralis.app.api.InstanceInfoBuilder;
 import com.aralis.tools.configuration.ui.UserSettingScreenProvider;
 import com.aralis.tools.support.SupportViewerScreenProvider;
 import com.aralis.vm.ScreenProviderFactory;
@@ -10,6 +8,7 @@ import com.caelo.application.ApplicationContext;
 import com.caelo.application.ApplicationContextBuilder;
 import com.caelo.application.VeloxCoreComponents;
 import com.caelo.util.logging.Loggers;
+import com.velox.app.api.InstanceInfoBuilder;
 import com.velox.tools.VeloxToolComponents;
 import com.velox.tools.VeloxToolModule;
 import com.velox.web.VeloxWebComponents;
@@ -22,24 +21,21 @@ public class Application {
     private final static Logger s_log = Loggers.getLogger();
 
     public static void main(String[] args) {
-        bootstrap("dev").get(VeloxWebComponents.WebServerBuilder)
-          .addPort(6061)
-          .addContextRoot(ContextRoot.create("/starter"))
-          .start();
-    }
-
-    public static ApplicationContext bootstrap(String instanceId) {
-        InstanceInfo instance = InstanceInfoBuilder.newBuilder().instanceId(instanceId).startTime(Instant.now()).get();
+        var instanceId = "dev";
+        var instance = InstanceInfoBuilder.newBuilder().instanceId(instanceId).startTime(Instant.now()).get();
         s_log.info("bootstrapping instance {}", instance.instanceId());
 
-        ApplicationContext context = ApplicationContextBuilder.create()
+        var context = ApplicationContextBuilder.create()
           .install(new VeloxWebModule())
           .install(new VeloxToolModule())
           .register(VeloxCoreComponents.InstanceInfo, ctx -> instance)
           .register(VeloxCoreComponents.ScreenProviderFactory, Application::createScreenProviderFactory)
           .get();
 
-        return context;
+        context.get(VeloxWebComponents.WebServerBuilder)
+          .addPort(6061)
+          .addContextRoot(ContextRoot.create("/starter"))
+          .start();
     }
 
     private static ScreenProviderFactory createScreenProviderFactory(ApplicationContext ctx) {
@@ -47,7 +43,7 @@ public class Application {
           new StarterScreenProvider("Starter", "Velox", "fa-desktop"),
           new SupportViewerScreenProvider(ctx.get(VeloxToolComponents.CachePublisherTracker),
             "Support Viewer",
-            "Configuration/Support",
+            "Support",
             "fa-phone"),
           new UserSettingScreenProvider("User Settings", "Configuration", "fa-user-circle"));
     }
