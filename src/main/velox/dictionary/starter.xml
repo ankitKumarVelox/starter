@@ -38,6 +38,7 @@
       <control name="email" type="singlevalue" datatype="string"/>
       <control name="age" type="singlevalue" datatype="int"/>
       <control name="search" type="singlevalue" datatype="string"/>
+      <control name="flasher" type="singlevalue" datatype="int"/>
       <control name="addUser" type="action"/>
       <control name="users" type="datagrid" datatype="User" keytype="?" viewname="User"/>
     </screen>

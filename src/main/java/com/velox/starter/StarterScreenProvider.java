@@ -56,6 +56,12 @@ public class StarterScreenProvider extends WorkspaceScreenProvider<StarterScreen
             }
         });
 
+        screen.m_flasher.setValue(0);
+        users.subscribe((ps, cs, rs) -> {
+            if (ps.size() > 0) {
+                screen.m_flasher.setValue(screen.m_flasher.getValue() + 1);
+            }
+        }, screen.cancellationManager());
         return screen;
     }
 }
