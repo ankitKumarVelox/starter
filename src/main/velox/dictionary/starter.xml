@@ -7,6 +7,7 @@
     <field name="firstName" type="string"/>
     <field name="lastName" type="string"/>
     <field name="region" type="string"/>
+    <field name="age" type="int"/>
   </fieldTypes>
 
   <tables>
@@ -14,6 +15,7 @@
       <field name="email" primaryKey="true"/>
       <field name="firstName"/>
       <field name="lastName"/>
+      <field name="age"/>
       <field name="region"/>
     </table>
   </tables>
@@ -22,6 +24,7 @@
     <view name="User" table="User">
       <column name="firstName" source="firstName" caption="First Name"/>
       <column name="lastName" source="lastName" caption="Last Name"/>
+      <column name="age" source="age" caption="Age"/>
       <column name="region" source="region" caption="Region"/>
       <column name="email" source="email" caption="Email"/>
     </view>
@@ -33,6 +36,7 @@
       <control name="lastName" type="singlevalue" datatype="string"/>
       <control name="region" type="singlevalue" datatype="string"/>
       <control name="email" type="singlevalue" datatype="string"/>
+      <control name="age" type="singlevalue" datatype="int"/>
       <control name="addUser" type="action"/>
       <control name="users" type="datagrid" datatype="User" keytype="?" viewname="User"/>
     </screen>

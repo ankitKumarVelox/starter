@@ -24,10 +24,16 @@ public class StarterScreenProvider extends WorkspaceScreenProvider<StarterScreen
         screen.m_addUser.setListener(action -> {
             String firstName = screen.m_firstName.getValue();
             String lastName = screen.m_lastName.getValue();
+            int age = screen.m_age.getValue() == null ? 0 : screen.m_age.getValue();
             String region = screen.m_region.getValue();
             String email = screen.m_email.getValue();
-            User user =
-              UserBuilder.newBuilder().firstName(firstName).lastName(lastName).region(region).email(email).get();
+            User user = UserBuilder.newBuilder()
+              .firstName(firstName)
+              .lastName(lastName)
+              .age(age)
+              .region(region)
+              .email(email)
+              .get();
             state.getDataContextAccessor().getPublisher(User.class).publish(user);
         });
 
