@@ -24,4 +24,9 @@
         <button class="button addUser">Add User</button>
     </div>
     <div class="users"></div>
+    <div class="vue">
+        <custom-toolbar :grid="users">
+            <vx-input :vm="search" placeholder="Search..."></vx-input>
+        </custom-toolbar>
+    </div>
 </div>
