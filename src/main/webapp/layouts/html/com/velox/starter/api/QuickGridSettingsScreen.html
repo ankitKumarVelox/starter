@@ -1,0 +1,26 @@
+<div class="vue" is="pop-over" :selector="`[id='${gridId.Value}'] .dg-toolbar-item.QuickSettings`"
+     @click-outside="request(close)">
+
+    <div class="vx-screen QuickGridSettingsScreen flex-col gap-between" style="border-radius: 4px">
+
+        <toggle-button :vm="showFilter">Filter Bar</toggle-button>
+        <toggle-button :vm="showTotalSummary">Total Summary</toggle-button>
+        <toggle-button :vm="showSelectionSummary">Select Summary</toggle-button>
+
+        <hr style="border-color: #666; width: 100%; margin: 10px 0 5px 0">
+
+        <vx-action :vm="configureGrid">
+            <i class="material-icons">build</i>
+            <span class="flex-1">Configure Grid...</span>
+        </vx-action>
+        <vx-action :vm="saveGrid">
+            <i class="material-icons">save</i>
+            <span class="flex-1">Save Grid</span>
+        </vx-action>
+        <vx-action :vm="exportGrid">
+            <i class="material-icons">launch</i>
+            <span class="flex-1">Export Grid</span>
+        </vx-action>
+    </div>
+
+</div>

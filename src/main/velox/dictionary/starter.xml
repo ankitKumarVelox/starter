@@ -42,5 +42,17 @@
       <control name="addUser" type="action"/>
       <control name="users" type="datagrid" datatype="User" keytype="?" viewname="User"/>
     </screen>
+
+    <screen name="QuickGridSettings">
+      <control name="showFilter" type="singlevalue" datatype="boolean"/>
+      <control name="showTotalSummary" type="singlevalue" datatype="boolean"/>
+      <control name="showSelectionSummary" type="singlevalue" datatype="boolean"/>
+      <control name="showStatus" type="singlevalue" datatype="boolean"/>
+      <control name="configureGrid" type="action"/>
+      <control name="saveGrid" type="action"/>
+      <control name="exportGrid" type="action"/>
+      <control name="gridId" type="singlevalue" datatype="string"/>
+      <control name="close" type="action"/>
+    </screen>
   </screens>
 </dictionary>

@@ -1,7 +1,10 @@
 package com.velox.starter;
 
+import com.aralis.gooey.api.ViewConfigBuilder;
+import com.aralis.tools.configuration.UIConfigProvider;
 import com.aralis.tools.configuration.ui.UserSettingScreenProvider;
 import com.aralis.tools.support.SupportViewerScreenProvider;
+import com.aralis.vm.DataGrid;
 import com.aralis.vm.ScreenProviderFactory;
 import com.aralis.vm.SimpleScreenProviderFactory;
 import com.caelo.application.ApplicationContext;
@@ -34,6 +37,13 @@ public class Application {
           .get();
 
         context.get(VeloxCoreComponents.DataContextAccessor).addDescriptors(StarterSchemaDescriptor.Descriptors);
+
+        var registry = context.get(VeloxCoreComponents.DomainControlActionHandlerRegistry);
+
+        registry.register(DataGrid.class, "QuickSettings", (notifier, state, grid, blob, cb) -> {
+            final var dg = (DataGrid<?, ?>) grid;
+            new QuickGridSettingsScreenProvider(dg, registry).create(state, notifier);
+        });
 
         context.get(VeloxWebComponents.WebServerBuilder)
           .addPort(6061)

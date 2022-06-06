@@ -1,0 +1,37 @@
+.pop-over .arrow {
+    position: absolute;
+    overflow: hidden;
+    width: 16px;
+    height: 16px;
+    background: transparent;
+}
+
+.pop-over .arrow:after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    top: 12px;
+    left: 4px;
+    background: #fcfcfc;
+    transform: rotate(45deg);
+
+    box-shadow: -1px -1px 5px -2px;
+}
+
+
+.pop-over[data-popper-placement^='top'] > .arrow {
+    bottom: -6px;
+}
+
+.pop-over[data-popper-placement^='bottom'] > .arrow {
+    top: -15px;
+}
+
+.pop-over[data-popper-placement^='left'] > .arrow {
+    right: -6px;
+}
+
+.pop-over[data-popper-placement^='right'] > .arrow {
+    left: -6px;
+}

@@ -48,3 +48,36 @@
     color: #ffffff;
     background-color: #00bfa5;
 }
+
+.QuickGridSettingsScreen .toggle-button {
+    padding: 1px;
+}
+
+.QuickGridSettingsScreen .toggle-button .switch {
+    transform: scale(0.8);
+}
+
+.QuickGridSettingsScreen .toggle-button .text {
+    font-size: 0.9em;
+}
+
+.QuickGridSettingsScreen .vx-action {
+    background: transparent;
+    color: black;
+    padding: 1px;
+}
+
+.QuickGridSettingsScreen .vx-action:hover {
+    background-color: rgb(113 158 206 / 45%);
+}
+
+
+.QuickGridSettingsScreen .vx-action .material-icons {
+    transform: scale(0.9);
+    margin: 0 10px 0 8px;
+}
+
+.QuickGridSettingsScreen .vx-action span {
+    text-align: left;
+    font-size: 0.9em;
+}
