@@ -1,6 +1,5 @@
 package com.velox.starter;
 
-import com.aralis.tools.configuration.ui.UserSettingScreenProvider;
 import com.aralis.tools.support.SupportViewerScreenProvider;
 import com.aralis.vm.ScreenProviderFactory;
 import com.aralis.vm.SimpleScreenProviderFactory;
@@ -9,9 +8,9 @@ import com.caelo.application.ApplicationContextBuilder;
 import com.caelo.application.VeloxCoreComponents;
 import com.caelo.util.logging.Loggers;
 import com.velox.app.api.InstanceInfoBuilder;
-import com.velox.starter.api.StarterSchemaDescriptor;
 import com.velox.tools.VeloxToolComponents;
 import com.velox.tools.VeloxToolModule;
+import com.velox.tools.ui.UserSettingScreenProvider;
 import com.velox.web.VeloxWebComponents;
 import com.velox.web.VeloxWebModule;
 import com.velox.web.vertx.ContextRoot;
@@ -32,8 +31,6 @@ public class Application {
           .register(VeloxCoreComponents.InstanceInfo, ctx -> instance)
           .register(VeloxCoreComponents.ScreenProviderFactory, Application::createScreenProviderFactory)
           .get();
-
-        context.get(VeloxCoreComponents.DataContextAccessor).addDescriptors(StarterSchemaDescriptor.Descriptors);
 
         context.get(VeloxWebComponents.WebServerBuilder)
           .addPort(6061)
