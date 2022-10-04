@@ -8,6 +8,7 @@ import com.caelo.application.ApplicationContextBuilder;
 import com.caelo.application.VeloxCoreComponents;
 import com.caelo.util.logging.Loggers;
 import com.velox.app.api.InstanceInfoBuilder;
+import com.velox.config.VeloxConfigModule;
 import com.velox.tools.VeloxToolComponents;
 import com.velox.tools.VeloxToolModule;
 import com.velox.tools.ui.UserSettingScreenProvider;
@@ -28,6 +29,7 @@ public class Application {
         var context = ApplicationContextBuilder.create()
           .install(new VeloxWebModule())
           .install(new VeloxToolModule())
+          .install(new VeloxConfigModule())
           .register(VeloxCoreComponents.InstanceInfo, ctx -> instance)
           .register(VeloxCoreComponents.ScreenProviderFactory, Application::createScreenProviderFactory)
           .get();
