@@ -1,6 +1,6 @@
 package com.velox.starter;
 
-import com.aralis.vm.BaseScreenProvider;
+import com.aralis.df.cache.CachePublisher;
 import com.aralis.vm.ClientNotifier;
 import com.aralis.vm.SessionState;
 import com.caelo.vm.workspace.WorkspaceScreenProvider;
@@ -10,13 +10,17 @@ import com.velox.starter.api.UserBuilder;
 import java.util.Arrays;
 
 public class StarterScreenProvider extends WorkspaceScreenProvider<StarterScreen> {
-    public StarterScreenProvider(final String caption, final String group, final String icon) {
+    private final CachePublisher<User, Object> m_userPublisher;
+
+    public StarterScreenProvider(
+      final String caption, final String group, final String icon, CachePublisher<User, Object> userPublisher) {
         super(StarterScreen.class, caption, group, icon);
+        m_userPublisher = userPublisher;
     }
 
     @Override
-    public StarterScreen createScreen(final SessionState state, final ClientNotifier notifier) {
-        final StarterScreen screen = new StarterScreen(state, state.getDataContextAccessor().getTable(User.class));
+    public StarterScreen createScreen(SessionState state, ClientNotifier notifier) {
+        StarterScreen screen = new StarterScreen(state, state.getDataContextAccessor().getTable(User.class));
         screen.title("Starter");
 
         screen.m_region.setOptions(Arrays.asList("AMRS", "APAC", "EMEA"));
@@ -34,7 +38,7 @@ public class StarterScreenProvider extends WorkspaceScreenProvider<StarterScreen
               .region(region)
               .email(email)
               .get();
-            state.getDataContextAccessor().getPublisher(User.class).publish(user);
+            m_userPublisher.publish(user);
         });
 
         return screen;

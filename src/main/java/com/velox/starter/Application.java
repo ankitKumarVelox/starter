@@ -9,6 +9,7 @@ import com.caelo.application.VeloxCoreComponents;
 import com.caelo.util.logging.Loggers;
 import com.velox.app.api.InstanceInfoBuilder;
 import com.velox.config.VeloxConfigModule;
+import com.velox.starter.api.User;
 import com.velox.tools.VeloxToolComponents;
 import com.velox.tools.VeloxToolModule;
 import com.velox.tools.ui.UserSettingScreenProvider;
@@ -42,7 +43,11 @@ public class Application {
 
     private static ScreenProviderFactory createScreenProviderFactory(ApplicationContext ctx) {
         return new SimpleScreenProviderFactory(
-          new StarterScreenProvider("Starter", "Velox", "fa-desktop"),
+          new StarterScreenProvider(
+            "Starter",
+            "Velox",
+            "fa-desktop",
+            ctx.get(VeloxCoreComponents.DataContextAccessor).getPublisher(User.class)),
           new SupportViewerScreenProvider(ctx.get(VeloxToolComponents.CachePublisherTracker),
             "Support Viewer",
             "Support",
