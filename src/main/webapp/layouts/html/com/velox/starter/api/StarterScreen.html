@@ -1,27 +1,26 @@
-<div class="StarterScreen vx-screen flex-col gap-between">
-    <div class="flex-row gap-between">
+<div class="StarterScreen vx-screen gap-1">
+    <div class="flex-row gap-1">
         <div class="labeled-input">
             <label>First Name</label>
-            <input class="firstName">
+            <vx-input :vm="firstName"></vx-input>
         </div>
         <div class="labeled-input">
             <label>Last Name</label>
-            <input class="lastName">
+            <vx-input :vm="lastName"></vx-input>
         </div>
         <div class="labeled-input">
             <label>Age</label>
-            <input class="age">
+            <vx-input :vm="age"></vx-input>
         </div>
         <div class="labeled-input">
             <label>Email</label>
-            <input class="email" type="email">
+            <vx-input :vm="email" type="email"></vx-input>
         </div>
         <div class="labeled-input">
             <label>Region</label>
-            <select class="region"></select>
+            <vx-select :vm="region"></vx-select>
         </div>
-
-        <button class="button addUser">Add User</button>
+        <vx-action :vm="addUser">Add User</vx-action>
     </div>
-    <div class="users"></div>
+    <vx-data-grid :vm="users" class="flex-1"></vx-data-grid>
 </div>

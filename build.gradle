@@ -25,13 +25,15 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.velox:velox-framework:2.3.0+'
+    implementation 'com.velox:velox-framework:2.4.0+'
     runtimeOnly 'ch.qos.logback:logback-classic:1.2.11'
 }
 
 application {
     mainClass.set('com.velox.starter.Application')
-    applicationDefaultJvmArgs = ['-Dfile.encoding=UTF-8', '-Dvertxweb.environment=development']
+    applicationDefaultJvmArgs = [
+            '-Dfile.encoding=UTF-8',
+    ]
 }
 
 /**
@@ -57,6 +59,43 @@ distributions {
         }
     }
 }
+
+/**
+ * Development server setup
+ */
+tasks.register('dev', JavaExec.class) {
+    group "application"
+    description "run application in development mode"
+
+    mainClass.set('com.velox.starter.Application')
+    classpath = sourceSets.main.runtimeClasspath
+    jvmArgs '-Dfile.encoding=UTF-8'
+    jvmArgs '-Dvelox.environment=development'
+}
+
+/**
+ * Extract the Velox bundled web resources into a local folder.
+ * The folder ${project.buildDir}/extracted-included-webapp can then be added to
+ * the application as additional web roots, hence the application can disable classpath
+ * scanning when serving static resources. This helps Windows user to have faster
+ * load time when starting/re-starting the application by avoiding unpacking jars
+ * at runtime.
+ */
+tasks.register('extractWebResources', Copy.class) {
+    into("${project.buildDir}/extracted-included-webapp")
+    into('.') { spec ->
+        configurations.runtimeClasspath.asFileTree.matching {
+            include "**/*velox-*.jar"
+        }.forEach {
+            spec.from(zipTree(it)) {
+                include "src/main/webapp/**"
+            }
+
+        }
+    }
+}
+
+tasks.classes.dependsOn extractWebResources
 
 idea.module {
     excludeDirs += file('.vertx')

@@ -16,6 +16,9 @@ import com.velox.tools.ui.UserSettingScreenProvider;
 import com.velox.web.VeloxWebComponents;
 import com.velox.web.VeloxWebModule;
 import com.velox.web.vertx.ContextRoot;
+import io.vertx.core.Vertx;
+import io.vertx.core.VertxOptions;
+import io.vertx.core.file.FileSystemOptions;
 import org.slf4j.Logger;
 import java.time.Instant;
 
@@ -25,7 +28,6 @@ public class Application {
     public static void main(String[] args) {
         var instanceId = "dev";
         var instance = InstanceInfoBuilder.newBuilder().instanceId(instanceId).startTime(Instant.now()).get();
-        s_log.info("bootstrapping instance {}", instance.instanceId());
 
         var context = ApplicationContextBuilder.create()
           .install(new VeloxWebModule())
@@ -33,12 +35,22 @@ public class Application {
           .install(new VeloxConfigModule())
           .register(VeloxCoreComponents.InstanceInfo, ctx -> instance)
           .register(VeloxCoreComponents.ScreenProviderFactory, Application::createScreenProviderFactory)
+          .register(VeloxWebComponents.Vertx, Application::createVertx)
           .get();
+
+        var env = context.get(VeloxCoreComponents.VeloxEnvironment);
+
+        var root = ContextRoot.create("/starter");
+        if (env.isDevelopment()) {
+            root.addWebRoot("build/extracted-included-webapp/src/main/webapp");
+        }
 
         context.get(VeloxWebComponents.WebServerBuilder)
           .addPort(6061)
-          .addContextRoot(ContextRoot.create("/starter"))
+          .addContextRoot(root)
           .start();
+
+        s_log.info("started instance {}, environment {}", instance.instanceId(), env.mode());
     }
 
     private static ScreenProviderFactory createScreenProviderFactory(ApplicationContext ctx) {
@@ -46,12 +58,23 @@ public class Application {
           new StarterScreenProvider(
             "Starter",
             "Velox",
-            "fa-desktop",
+            "fa-solid fa-desktop",
             ctx.get(VeloxCoreComponents.DataContextAccessor).getPublisher(User.class)),
           new SupportViewerScreenProvider(ctx.get(VeloxToolComponents.CachePublisherTracker),
             "Support Viewer",
             "Support",
-            "fa-phone"),
-          new UserSettingScreenProvider("User Settings", "Configuration", "fa-user-circle"));
+            "fa-solid fa-phone"),
+          new UserSettingScreenProvider("User Settings", "Configuration", "fa-solid fa-circle-user"));
+    }
+
+    private static Vertx createVertx(ApplicationContext ctx) {
+        var env = ctx.get(VeloxCoreComponents.VeloxEnvironment);
+        if (env.isDevelopment()) {
+            var options = new VertxOptions();
+            options.setFileSystemOptions(new FileSystemOptions().setClassPathResolvingEnabled(false));
+            return Vertx.vertx(options);
+        } else {
+            return Vertx.vertx();
+        }
     }
 }
