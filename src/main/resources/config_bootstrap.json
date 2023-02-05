@@ -1,0 +1,19 @@
+[ {
+  ".typeTag" : "com.velox.config.VeloxConfig",
+  "node" : "system",
+  "namespace" : "UserConfigNamespace",
+  "value" : "SPA",
+  "key" : "AppMode"
+}, {
+  ".typeTag" : "com.velox.config.VeloxConfig",
+  "node" : "system",
+  "namespace" : "UserConfigNamespace",
+  "value" : "{\".typeTag\":\"com.aralis.tools.UserLogin\",\"salt\":\"xp3xL91P+Z0=\",\"passwordResetDate\":\"20230127\",\"userId\":\"system\",\"hash\":\"eLk2QufgtAHtrWWzJFp67oleS8k=\"}",
+  "key" : "Password"
+}, {
+  ".typeTag" : "com.velox.config.VeloxConfig",
+  "node" : "system",
+  "namespace" : "UserConfigNamespace",
+  "value" : "dark",
+  "key" : "Theme"
+} ]

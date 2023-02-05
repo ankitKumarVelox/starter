@@ -12,6 +12,7 @@ If you have unrestricted network:
 1. use `./gradlew build` (or `gradlew.bat build` on Windows) to build
 1. use`./gradlew run` (or `gradlew.bat run` on Windows) to start the app server 
 1. use `http://localhost:6061/starter` to access the gui in Chrome once app server starts
+1. username and password are both system
 
 ### Work with the project in Intellij
 In Intellij, open the settings.gradle file. When prompted, click on "Open as a project". You can then use the tasks in the Gradle panel to clean, build and run the project. You can also use taks velox -> generateVelox to run the Velox code gen whenever you change the dictionary.
