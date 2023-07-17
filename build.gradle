@@ -25,7 +25,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.velox:velox-framework:2.4.0+'
+    implementation 'com.velox:velox-framework:3.0.0+'
     runtimeOnly 'ch.qos.logback:logback-classic:1.2.11'
 }
 
