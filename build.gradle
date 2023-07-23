@@ -32,7 +32,7 @@ dependencies {
 application {
     mainClass.set('com.velox.starter.Application')
     applicationDefaultJvmArgs = [
-            '-Dfile.encoding=UTF-8',
+            '-Dfile.encoding=UTF-8','-Xmx30g'
     ]
 }
 

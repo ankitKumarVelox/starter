@@ -17,8 +17,28 @@
       <field name="lastName"/>
       <field name="age"/>
       <field name="region"/>
+      <field name="f1" type="double"/>
+      <field name="f2" type="double"/>
+      <field name="f3" type="double"/>
+      <field name="f4" type="double"/>
+      <field name="f5" type="double"/>
+      <field name="f6" type="double"/>
+      <field name="f7" type="double"/>
+      <field name="f8" type="double"/>
+      <field name="f9" type="double"/>
+      <field name="f0" type="double"/>
+      <field name="timeKey" type="String"/>
+    </table>
+    <table name="Time">
+      <field name="timeKey" type="String" primaryKey="true"/>
+      <field name="time" type="date_time"/>
     </table>
   </tables>
+  <joins>
+    <join name="UserTime" primary="User" primaryName="user">
+      <field name="time" type="Time" root="timeKey" joined="timeKey"/>
+    </join>
+  </joins>
 
   <views>
     <view name="User" table="User">
