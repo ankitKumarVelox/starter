@@ -1,5 +1,6 @@
 package com.velox.starter;
 
+import com.aralis.df.cache.state.DataContextAccessor;
 import com.aralis.tools.support.SupportViewerScreenProvider;
 import com.aralis.vm.ScreenProviderFactory;
 import com.aralis.vm.SimpleScreenProviderFactory;
@@ -8,8 +9,16 @@ import com.caelo.application.ApplicationContextBuilder;
 import com.caelo.application.VeloxCoreComponents;
 import com.caelo.util.logging.Loggers;
 import com.velox.app.api.InstanceInfoBuilder;
+import com.velox.boule.sm.api.ConnectionBuilder;
+import com.velox.boule.sm.api.SMConfig;
+import com.velox.boule.sm.api.SMConfigBuilder;
+import com.velox.boule.sm.api.SharedSMConfigBuilder;
 import com.velox.config.VeloxConfigModule;
+import com.velox.starter.api.TrainingSMCommand;
 import com.velox.starter.api.User;
+import com.velox.starter.api.trainingsm.client.TrainingSMClient;
+import com.velox.starter.api.trainingsm.server.TrainingSMHandler;
+import com.velox.starter.api.trainingsm.server.TrainingSMServer;
 import com.velox.tools.VeloxToolComponents;
 import com.velox.tools.VeloxToolModule;
 import com.velox.tools.ui.UserSettingScreenProvider;
@@ -20,7 +29,10 @@ import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
 import io.vertx.core.file.FileSystemOptions;
 import org.slf4j.Logger;
+
+import java.io.IOException;
 import java.time.Instant;
+import java.util.List;
 
 public class Application {
     private final static Logger s_log = Loggers.getLogger();
@@ -36,6 +48,7 @@ public class Application {
           .register(VeloxCoreComponents.InstanceInfo, ctx -> instance)
           .register(VeloxCoreComponents.ScreenProviderFactory, Application::createScreenProviderFactory)
           .register(VeloxWebComponents.Vertx, Application::createVertx)
+          .register(TrainingSMClient.class, Application::createTrainingSMClient)
           .get();
 
         var env = context.get(VeloxCoreComponents.VeloxEnvironment);
@@ -54,7 +67,9 @@ public class Application {
     }
 
     private static ScreenProviderFactory createScreenProviderFactory(ApplicationContext ctx) {
+        TrainingSMClient smClient = ctx.get(TrainingSMClient.class);
         return new SimpleScreenProviderFactory(
+                new StylistBlotterScreenProvider(smClient, "Caption", "group","icon"),
           new StarterScreenProvider(
             "Starter",
             "Velox",
@@ -76,5 +91,28 @@ public class Application {
         } else {
             return Vertx.vertx();
         }
+    }
+
+    private static TrainingSMClient createTrainingSMClient(ApplicationContext ctx) throws IOException {
+        DataContextAccessor dc = ctx.get(VeloxCoreComponents.DataContextAccessor);
+        SMConfig smConfig = SMConfigBuilder.newBuilder()
+                .myNodeName("local")
+                .sharedConfig(
+                        SharedSMConfigBuilder.newBuilder()
+                                .instanceName("Stylist")
+                                .sessionName("One")
+                                .connections(
+                                        List.of(ConnectionBuilder.newBuilder()
+                                                .nodeName("local")
+                                                .hostName("localhost")
+                                                .port(8080)
+                                                .preferredPrimary(true)
+                                                .get())).get())
+                .get();
+        TrainingSMServer server = new TrainingSMServer.Builder(smConfig, new TrainingSMHandler() {}).build();
+        server.run();
+        TrainingSMClient client = new TrainingSMClient.Builder("client", smConfig.sharedConfig())
+                .dataContext(dc).subscribeAllStates().build();
+        return client;
     }
 }

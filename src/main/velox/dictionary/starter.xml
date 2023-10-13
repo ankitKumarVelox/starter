@@ -8,6 +8,12 @@
     <field name="lastName" type="string"/>
     <field name="region" type="string"/>
     <field name="age" type="int"/>
+    <field name="stylistId" type="string"/>
+    <field name="firstName" type="string"/>
+    <field name="lastName" type="string"/>
+    <field name="address" type="string"/>
+    <field name="phoneNo" type="string"/>
+    <field name="commissionRate" type="double"/>
   </fieldTypes>
 
   <tables>
@@ -20,6 +26,19 @@
     </table>
   </tables>
 
+  <stateMachines>
+    <stateMachine name="TrainingSM">
+      <state name="Stylist">
+        <field name="stylistId" primaryKey="true"/>
+        <field name="firstName"/>
+        <field name="lastName"/>
+        <field name="address"/>
+        <field name="phoneNo"/>
+        <field name="commissionRate"/>
+      </state>
+    </stateMachine>
+  </stateMachines>
+
   <views>
     <view name="User" table="User">
       <column name="firstName" source="firstName" caption="First Name"/>
@@ -27,6 +46,13 @@
       <column name="age" source="age" caption="Age"/>
       <column name="region" source="region" caption="Region"/>
       <column name="email" source="email" caption="Email"/>
+    </view>
+    <view name="Stylist">
+      <column name="firstName" source="firstName" caption="First Name"/>
+      <column name="lastName" source="lastName" caption="Last Name"/>
+      <column name="address" source="address" caption="Address"/>
+      <column name="phoneNo" source="phoneNo" caption="Phone Number"/>
+      <column name="commissionRate" source="commissionRate" caption="Comm Rate"/>
     </view>
   </views>
 
@@ -39,6 +65,9 @@
       <control name="age" type="singlevalue" datatype="int"/>
       <control name="addUser" type="action"/>
       <control name="users" type="datagrid" datatype="User" keytype="?" viewname="User"/>
+    </screen>
+    <screen name="StylistBlotter">
+      <control name="stylists" type="datagrid" datatype="Stylist" keytype="string" viewname="Stylist"/>
     </screen>
   </screens>
 </dictionary>
