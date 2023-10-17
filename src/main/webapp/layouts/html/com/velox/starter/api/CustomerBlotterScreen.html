@@ -1,0 +1,11 @@
+<div class="CustomerBlotterScreen vx-screen gap-1">
+    <label>Search</label>
+    <vx-input :vm = "search"></vx-input>
+    <vx-action :vm="delete">
+        Delete
+    </vx-action>
+    <vx-action :vm="addCustomer">
+        Add Customer
+    </vx-action>
+    <vx-data-grid :vm="customerJoin"></vx-data-grid>
+</div>

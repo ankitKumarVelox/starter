@@ -14,6 +14,7 @@ import com.velox.boule.sm.api.SMConfig;
 import com.velox.boule.sm.api.SMConfigBuilder;
 import com.velox.boule.sm.api.SharedSMConfigBuilder;
 import com.velox.config.VeloxConfigModule;
+import com.velox.starter.api.CustomerBlotterScreen;
 import com.velox.starter.api.TrainingSMCommand;
 import com.velox.starter.api.User;
 import com.velox.starter.api.trainingsm.client.TrainingSMClient;
@@ -69,6 +70,7 @@ public class Application {
     private static ScreenProviderFactory createScreenProviderFactory(ApplicationContext ctx) {
         TrainingSMClient smClient = ctx.get(TrainingSMClient.class);
         return new SimpleScreenProviderFactory(
+                new CustomerBlotterScreenProvider(smClient, "Customer", "group","icon2"),
                 new StylistBlotterScreenProvider(smClient, "Caption", "group","icon"),
           new StarterScreenProvider(
             "Starter",
@@ -95,7 +97,7 @@ public class Application {
 
     private static TrainingSMClient createTrainingSMClient(ApplicationContext ctx) throws IOException {
         DataContextAccessor dc = ctx.get(VeloxCoreComponents.DataContextAccessor);
-        SMConfig smConfig = SMConfigBuilder.newBuilder()
+        SMConfig smconfig = SMConfigBuilder.newBuilder()
                 .myNodeName("local")
                 .sharedConfig(
                         SharedSMConfigBuilder.newBuilder()
@@ -105,14 +107,20 @@ public class Application {
                                         List.of(ConnectionBuilder.newBuilder()
                                                 .nodeName("local")
                                                 .hostName("localhost")
-                                                .port(8080)
+                                                .port(12345)
                                                 .preferredPrimary(true)
                                                 .get())).get())
                 .get();
-        TrainingSMServer server = new TrainingSMServer.Builder(smConfig, new TrainingSMHandler() {}).build();
-        server.run();
-        TrainingSMClient client = new TrainingSMClient.Builder("client", smConfig.sharedConfig())
-                .dataContext(dc).subscribeAllStates().build();
-        return client;
+
+        try {
+            TrainingSMServer server = new TrainingSMServer.Builder(smconfig, new TrainingSMHandler() {
+            }).build();
+            server.run();
+            TrainingSMClient client =
+                    new TrainingSMClient.Builder("localclient", smconfig.sharedConfig()).dataContext(dc).subscribeAllStates().build();
+            return client;
+        } catch (Exception e) {
+        }
+        return null;
     }
 }

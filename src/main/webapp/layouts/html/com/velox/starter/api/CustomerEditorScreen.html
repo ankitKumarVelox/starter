@@ -1,0 +1,25 @@
+<div class="CustomerEditorScreen vx-screen gap-1">
+    <h3> Customer Editor</h3>
+    <label>First Name</label>
+    <vx-input :vm="firstName"/>
+
+    <label>Last Name</label>
+    <vx-input :vm="lastName"/>
+
+    <label>Address</label>
+    <vx-input :vm="address"/>
+
+    <label>Phone no.</label>
+    <vx-input :vm="phoneNo"/>
+
+    <label>Stylist Id</label>
+    <vx-select :vm="stylistId"></vx-select>
+
+    <vx-action :vm="ok">
+        Ok
+    </vx-action>
+    <vx-action :vm="cancel">
+       Cancel
+    </vx-action>
+
+</div>

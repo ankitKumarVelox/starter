@@ -13,7 +13,10 @@
     <field name="lastName" type="string"/>
     <field name="address" type="string"/>
     <field name="phoneNo" type="string"/>
+    <field name="customerId" type="string"/>
+    <field name="experienceLevel" type="string"/>
     <field name="commissionRate" type="double"/>
+    <field name="stylistLastName" type="string"/>
   </fieldTypes>
 
   <tables>
@@ -35,9 +38,24 @@
         <field name="address"/>
         <field name="phoneNo"/>
         <field name="commissionRate"/>
+        <field name="experienceLevel"/>
+      </state>
+      <state name="Customer">
+        <field name="customerId" primaryKey="true"/>
+        <field name="firstName"/>
+        <field name="lastName"/>
+        <field name="address"/>
+        <field name="phoneNo"/>
+        <field name="stylistId"/>
       </state>
     </stateMachine>
   </stateMachines>
+
+  <joins>
+    <join name="CustomerJoin" primary="Customer" primaryName="customer">
+      <field name="stylist" type="Stylist" root="stylistId" joined="stylistId"/>
+    </join>
+  </joins>
 
   <views>
     <view name="User" table="User">
@@ -53,6 +71,14 @@
       <column name="address" source="address" caption="Address"/>
       <column name="phoneNo" source="phoneNo" caption="Phone Number"/>
       <column name="commissionRate" source="commissionRate" caption="Comm Rate"/>
+      <column name="experienceLevel" source="experienceLevel" caption="Exp Level"/>
+    </view>
+    <view name="CustomerJoin">
+      <column name="firstName" source="customer.firstName" caption="First Name"/>
+      <column name="lastName" source="customer.lastName" caption="Last Name"/>
+      <column name="address" source="customer.address" caption="Address"/>
+      <column name="phoneNo" source="customer.phoneNo" caption="Phone Number"/>
+      <column name="stylistLastName" source="stylist.lastName" caption="Stylists"/>
     </view>
   </views>
 
@@ -68,6 +94,32 @@
     </screen>
     <screen name="StylistBlotter">
       <control name="stylists" type="datagrid" datatype="Stylist" keytype="string" viewname="Stylist"/>
+      <control name="addStylist" type="action"/>
+    </screen>
+    <screen name="StylistEditor">
+      <control name="firstName" type="singlevalue" datatype="string"/>
+      <control name="lastName" type="singlevalue" datatype="string"/>
+      <control name="address" type="singlevalue" datatype="string"/>
+      <control name="phoneNo" type="singlevalue" datatype="string"/>
+      <control name="experienceLevel" type="singlevalue" datatype="string"/>
+      <control name="commissionRate" type="singlevalue" datatype="double"/>
+      <control name="ok" type="action"/>
+      <control name="cancel" type="action"/>
+    </screen>
+    <screen name="CustomerBlotter">
+      <control name="search" type="singlevalue" datatype="String"/>
+      <control name="delete" type="action"/>
+      <control name="customerJoin" type="datagrid" datatype="CustomerJoin" keytype="string" viewname="CustomerJoin"/>
+      <control name="addCustomer" type="action"/>
+    </screen>
+    <screen name="CustomerEditor">
+      <control name="firstName" type="singlevalue" datatype="string"/>
+      <control name="lastName" type="singlevalue" datatype="string"/>
+      <control name="address" type="singlevalue" datatype="string"/>
+      <control name="phoneNo" type="singlevalue" datatype="string"/>
+      <control name="stylistId" type="singlevalue" datatype="string"/>
+      <control name="ok" type="action"/>
+      <control name="cancel" type="action"/>
     </screen>
   </screens>
 </dictionary>
